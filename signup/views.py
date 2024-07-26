@@ -16,7 +16,7 @@ import random
 import string
 import json
 import re  # Import regular expression module for phone number validation
-import datetime
+
 
 @csrf_exempt
 def primary_signup_view(request):
@@ -99,21 +99,17 @@ def educational_details_view(request):
 
             university_of_study = data.get('university_of_study')
             course = data.get('course')
-            year_of_admission_str = data.get('year_of_admission')
-            year_of_graduation_str = data.get('year_of_graduation')
+            year_of_admission = data.get('year_of_admission')
+            year_of_graduation = data.get('year_of_graduation')
             level = data.get('level')
 
             # Debug: Log the parsed data
-            print(f"university_of_study: {university_of_study}, course: {course}, year_of_admission: {year_of_admission_str}, year_of_graduation: {year_of_graduation_str}, level: {level}")
+            print(f"university_of_study: {university_of_study}, course: {course}, year_of_admission: {year_of_admission}, year_of_graduation: {year_of_graduation}, level: {level}")
 
             # Check for missing fields
-            required_fields = [university_of_study, course, year_of_admission_str, year_of_graduation_str, level]
+            required_fields = [university_of_study, course, year_of_admission, year_of_graduation, level]
             if not all(required_fields):
                 return JsonResponse({'error': 'Missing fields'}, status=400)
-
-            # Convert string dates to datetime.date objects
-            year_of_admission = datetime.datetime.strptime(year_of_admission_str, '%Y-%m-%d').date()
-            year_of_graduation = datetime.datetime.strptime(year_of_graduation_str, '%Y-%m-%d').date()
 
             # Save the educational details in the profile
             user.profile.university_of_study = university_of_study
