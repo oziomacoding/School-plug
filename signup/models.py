@@ -9,8 +9,8 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True)
     university_of_study = models.CharField(max_length=255, blank=True)
     course = models.CharField(max_length=255, blank=True)
-    year_of_admission = models.IntegerField(blank=True, null=True)
-    year_of_graduation = models.IntegerField(blank=True, null=True)
+    year_of_admission = models.DateField(null=True, blank=True)
+    year_of_graduation = models.DateField(null=True, blank=True)
     full_name = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
@@ -21,8 +21,8 @@ class Profile(models.Model):
     university_of_study = models.CharField(max_length=255, blank=True)
     course = models.CharField(max_length=255, blank=True)
     level = models.CharField(max_length=255, blank=True, null=True) 
-    year_of_admission = models.IntegerField(blank=True, null=True)
-    year_of_graduation = models.IntegerField(blank=True, null=True)
+    year_of_admission = models.DateField(null=True, blank=True)
+    year_of_graduation = models.DateField(null=True, blank=True)
     full_name = models.CharField(max_length=255, blank=True)
     reset_code = models.CharField(max_length=4, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)  
