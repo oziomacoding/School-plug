@@ -74,12 +74,14 @@ def primary_signup_view(request):
             login(request, user)
             return JsonResponse({'message': 'User created successfully'}, status=201)
 
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
         except Exception as e:
             # Debug: Log the error
             print(f"Error during user creation: {str(e)}")
-            return JsonResponse({'error': str(e)}, status=500)
+            return JsonResponse({'error': 'An unexpected error occurred. Please try again later.'}, status=500)
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 def educational_details_view(request):
@@ -127,12 +129,14 @@ def educational_details_view(request):
 
             return JsonResponse({'message': 'Educational details updated successfully'}, status=200)
 
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
         except Exception as e:
             # Debug: Log the error
             print(f"Error during updating educational details: {str(e)}")
-            return JsonResponse({'error': str(e)}, status=500)
+            return JsonResponse({'error': 'An unexpected error occurred. Please try again later.'}, status=500)
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 @csrf_exempt
@@ -162,9 +166,9 @@ def profile_picture_view(request):
         except Exception as e:
             # Debug: Log the error
             print(f"Error during profile picture upload: {str(e)}")
-            return JsonResponse({'error': str(e)}, status=500)
+            return JsonResponse({'error': 'An unexpected error occurred. Please try again later.'}, status=500)
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 
