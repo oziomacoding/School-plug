@@ -65,6 +65,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5174',  # Add your frontend URL here
+    "https://school-plug.onrender.com",
+
 ]
 
 ROOT_URLCONF = 'school_plug.urls'
@@ -152,3 +154,27 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Email backend configuration for development
 # This will print email messages to the console instead of sending them
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
