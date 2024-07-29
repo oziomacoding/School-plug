@@ -7,6 +7,7 @@ from django.shortcuts import render
 from .models import CustomUser  # Import your CustomUser model
 from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import get_user_model #for token
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.core.validators import validate_email
@@ -17,7 +18,10 @@ import string
 import json
 import re  # Import regular expression module for phone number validation
 import datetime
+from rest_framework_simplejwt.tokens import RefreshToken
 
+
+CustomUser = get_user_model()
 
 @csrf_exempt
 def primary_signup_view(request):
@@ -72,7 +76,22 @@ def primary_signup_view(request):
             user.profile.save()
 
             login(request, user)
-            return JsonResponse({'message': 'User created successfully'}, status=201)
+
+            # Generate JWT tokens
+            refresh = RefreshToken.for_user(user)
+            token_data = {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+
+            user_data = {
+                'id': user.id,
+                'full_name': user.profile.full_name,
+                'email': user.email,
+                'phone_number': user.phone_number,
+            }
+
+            return JsonResponse({'message': 'User created successfully', 'token': token_data, 'user': user_data}, status=201)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)

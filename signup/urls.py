@@ -5,6 +5,8 @@ from .views import login_view, logout_view, request_password_reset, verify_reset
 from .views import primary_signup_view, educational_details_view, profile_picture_view
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 urlpatterns = [
     path('api/signup/', primary_signup_view, name='primary_signup'),
@@ -15,6 +17,8 @@ urlpatterns = [
     path('api/request_password_reset/', request_password_reset, name='request_password_reset'),
     path('api/verify_reset_code/', verify_reset_code, name='verify_reset_code'),
     path('api/reset_password/', reset_password, name='reset_password'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), #token
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), #token
 ]
 
 if settings.DEBUG:
