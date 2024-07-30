@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a--3ra0@@urre#!ch(-i0hh9+uu%(g8dg035+@myg5)-&laxa5'
+# SECRET_KEY = 'django-insecure-a--3ra0@@urre#!ch(-i0hh9+uu%(g8dg035+@myg5)-&laxa5'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-a--3ra0@@urre#!ch(-i0hh9+uu%(g8dg035+@myg5)-&laxa5')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'school-plug.onrender.com']
 
@@ -121,12 +124,20 @@ AUTH_USER_MODEL = 'signup.CustomUser'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+if not DEBUG:
+    DATABASES = {
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
+    
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+   
+    
 
 
 # Password validation
