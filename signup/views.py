@@ -18,7 +18,7 @@ import string
 import json
 import re  # Import regular expression module for phone number validation
 import datetime
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 CustomUser = get_user_model()
@@ -77,13 +77,10 @@ def primary_signup_view(request):
 
             login(request, user)
 
-            # Generate JWT tokens
-            refresh = RefreshToken.for_user(user)
-            token_data = {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }
+            # Generate an access token
+            access_token = AccessToken.for_user(user)
 
+            # Prepare the user data
             user_data = {
                 'id': user.id,
                 'full_name': user.profile.full_name,
@@ -91,7 +88,8 @@ def primary_signup_view(request):
                 'phone_number': user.phone_number,
             }
 
-            return JsonResponse({'message': 'User created successfully', 'token': token_data, 'user': user_data}, status=201)
+            # Return the token and user data
+            return JsonResponse({'message': 'User created successfully', 'token': str(access_token), 'user': user_data}, status=201)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
