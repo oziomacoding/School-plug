@@ -30,8 +30,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-a--3ra0@@urre#!ch(-i0
 # DEBUG = True
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'school-plug.onrender.com']
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(",")
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'school-plug.onrender.com']
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost', '127.0.0.1').split(",")
 
 
 
