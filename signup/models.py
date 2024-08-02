@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True)
     university_of_study = models.CharField(max_length=255, blank=True)
     course = models.CharField(max_length=255, blank=True)
+    department = models.CharField(max_length=255, blank=True)  # Added department field
     year_of_admission = models.DateField(null=True, blank=True)
     year_of_graduation = models.DateField(null=True, blank=True)
     full_name = models.CharField(max_length=255, blank=True)
@@ -20,6 +21,7 @@ class Profile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     university_of_study = models.CharField(max_length=255, blank=True)
     course = models.CharField(max_length=255, blank=True)
+    department = models.CharField(max_length=255, blank=True)  # Added department field
     level = models.CharField(max_length=255, blank=True, null=True) 
     year_of_admission = models.DateField(null=True, blank=True)
     year_of_graduation = models.DateField(null=True, blank=True)

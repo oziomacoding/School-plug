@@ -119,15 +119,17 @@ def educational_details_view(request):
 
             university_of_study = data.get('university_of_study')
             course = data.get('course')
+            department = data.get('department')  # New field added here
+            level = data.get('level')
             year_of_admission_str = data.get('year_of_admission')
             year_of_graduation_str = data.get('year_of_graduation')
-            level = data.get('level')
+            
 
             # Debug: Log the parsed data
-            print(f"university_of_study: {university_of_study}, course: {course}, year_of_admission: {year_of_admission_str}, year_of_graduation: {year_of_graduation_str}, level: {level}")
+            print(f"university_of_study: {university_of_study}, course: {course}, department: {department}, level: {level}, year_of_admission: {year_of_admission_str}, year_of_graduation: {year_of_graduation_str}")
 
             # Check for missing fields
-            required_fields = [university_of_study, course, year_of_admission_str, year_of_graduation_str, level]
+            required_fields = [university_of_study, course, department, level, year_of_admission_str, year_of_graduation_str]
             if not all(required_fields):
                 return JsonResponse({'error': 'Missing fields'}, status=400)
 
@@ -139,9 +141,10 @@ def educational_details_view(request):
             # Save the educational details in the profile
             user.profile.university_of_study = university_of_study
             user.profile.course = course
+            user.profile.department = department  # Save the department field
+            user.profile.level = level
             user.profile.year_of_admission = year_of_admission
             user.profile.year_of_graduation = year_of_graduation
-            user.profile.level = level
             user.profile.save()
 
             return JsonResponse({'message': 'Educational details updated successfully'}, status=200)
