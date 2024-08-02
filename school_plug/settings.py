@@ -71,6 +71,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # Add your frontend URL here
+    'http://localhost:5174',  # Add your frontend URL here
     "https://school-plug.onrender.com",
 
 ]
